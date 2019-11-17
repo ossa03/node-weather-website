@@ -8,7 +8,7 @@ weatherForm.addEventListener('submit', (e) => {
     const input = document.querySelector('#location')
     const address = input.value;
     const URL = `/weather/?address=${address}`;
-    // const URL = `http://localhost:3000/weather/?address=${address}`;
+
     const messageOne = document.querySelector('#messageOne');
     const messageTwo = document.querySelector('#messageTwo');
 
@@ -30,11 +30,11 @@ weatherForm.addEventListener('submit', (e) => {
 });
 
 // 現在地の経度、緯度取得
-// const getPresentLocation = () => {
-//     navigator.geolocation.getCurrentPosition(position => {
-//         return {
-//             latitude: position.coords.latitude,  // 緯度
-//             longitude: position.coords.longitude  // 経度
-//         }
-//     })
-// }
+const getPresentLocation = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+        return {
+            latitude: position.coords.latitude,  // 緯度
+            longitude: position.coords.longitude  // 経度
+        }
+    })
+}
