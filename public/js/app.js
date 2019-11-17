@@ -22,8 +22,7 @@ weatherForm.addEventListener('submit', (e) => {
                 messageOne.textContent = data.error;
             } else {
                 messageOne.textContent = data.location;
-                messageTwo.textContent = `今の天気は${data.forecast.summary} 気温${data.forecast.temperature}℃ 降水確率${data.forecast.precipProbability}%`
-                // console.log(data);
+                messageTwo.textContent = `今の天気は${data.forecast.summary} 気温${data.forecast.temperature}℃ 降水確率${data.forecast.precipProbability}% 風速${data.forecast.windSpeed} 気圧${data.forecast.pressure}`
             }
         })
         .catch(err => console.log(err))

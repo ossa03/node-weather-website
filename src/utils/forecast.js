@@ -17,7 +17,9 @@ const forecast = (latitude, longitude, callback) => {
             callback(undefined, {
                 summary: data.summary,
                 temperature: data.temperature,
-                precipProbability: Math.floor(data.precipProbability * 100)
+                precipProbability: Math.floor(data.precipProbability * 100),
+                windSpeed: data.windSpeed,
+                pressure: data.pressure
             })
         }
     })
