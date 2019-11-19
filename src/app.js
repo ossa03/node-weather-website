@@ -43,29 +43,67 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    if (!req.query.address) {
-        return res.send({
-            error: "You must provide an address"
-        })
-    }
-    geocode(req.query.address, (err, { latitude, longitude, location } = {}) => {
-        if (err) {
-            return res.send({ "error": err })
-        }
-        // const { latitude, longitude, location } = data
-        forecast(latitude, longitude, (err, forecastData) => {
+    // 現在地の経度と緯度を取得できた場合
+    if (req.query.latitude && req.query.longitude) {
+        forecast(req.query.latitude, req.query.longitude, (err, forecastData) => {
             if (err) {
                 return res.send({ err })
             } else {
                 res.send({
-                    forecast: forecastData,
-                    location: location,
-                    address: req.query.address
+                    forecast: forecastData
                 })
             }
         })
-    })
+    } else {
+        // 現在位置を取得できない場合の処理
+        if (!req.query.address) {
+            return res.send({
+                error: "You must provide an address"
+            })
+        }
+        geocode(req.query.address, (err, { latitude, longitude, location } = {}) => {
+            if (err) {
+                return res.send({ "error": err })
+            }
+            // const { latitude, longitude, location } = data
+            forecast(latitude, longitude, (err, forecastData) => {
+                if (err) {
+                    return res.send({ err })
+                } else {
+                    res.send({
+                        forecast: forecastData,
+                        location: location,
+                        address: req.query.address
+                    })
+                }
+            })
+        })
+    }
 })
+// app.get('/weather', (req, res) => {
+//     if (!req.query.address) {
+//         return res.send({
+//             error: "You must provide an address"
+//         })
+//     }
+//     geocode(req.query.address, (err, { latitude, longitude, location } = {}) => {
+//         if (err) {
+//             return res.send({ "error": err })
+//         }
+//         // const { latitude, longitude, location } = data
+//         forecast(latitude, longitude, (err, forecastData) => {
+//             if (err) {
+//                 return res.send({ err })
+//             } else {
+//                 res.send({
+//                     forecast: forecastData,
+//                     location: location,
+//                     address: req.query.address
+//                 })
+//             }
+//         })
+//     })
+// })
 
 
 app.get('/help/*', (req, res) => {
